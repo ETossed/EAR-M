@@ -40,7 +40,7 @@ class Player(object):
         if len(opponents) != len(history):
             print("ERROR: Amount of matches does not match amount of opponents for " + self.tag + " - " + tournament.name)
             return
-        
+
         self.tournaments.append(tournament)
 
         # Result loop
@@ -246,9 +246,7 @@ player_list = [Hungrybox, Leffen, Mango, Axe, Wizzrobe, Zain, aMSa, Plup, iBDW, 
 
 Valhalla3 = Tournament("Valhalla III", 3, "Leffen")
 Genesis7 = Tournament("Genesis 7", 5, "Zain")
-VerdugoWest95 = Tournament("Melee at Verdugo West 95", 1, "Westballz")
 SavingMrLombardi2 = Tournament("Saving Mr. Lombardi 2", 3, "Fiction")
-Nimbus70 = Tournament("Nimbus 70", 1, "S2J")
 SmashSummit9 = Tournament("Smash Summit 9", 4, "Hungrybox")
 
 
@@ -340,38 +338,29 @@ def main():
     # S2J
     S2J1O = [Joyboy, Zain, Ryobeat, n0ne]
     S2J1R = ["w", "l", "w", "l"]
-    S2J2O = [Kodorin, Trif, Captain_Faceroll, Trif]
-    S2J2R = ["w", "w", "w", "w"]
-    S2J3O = [Ginger, Westballz, Ice, Prince_Abu, Franz, Kalamazhu, Professor_Pro, Lucky, Ginger, Professor_Pro, iBDW]
-    S2J3R = ["w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l"]
+    S2J2O = [Ginger, Westballz, Ice, Prince_Abu, Franz, Kalamazhu, Professor_Pro, Lucky, Ginger, Professor_Pro, iBDW]
+    S2J2R = ["w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l"]
     S2J.lvl_calculator(Genesis7, 13, S2J1O, S2J1R)
-    S2J.lvl_calculator(Nimbus70, 1, S2J2O, S2J2R)
-    S2J.lvl_calculator(SavingMrLombardi2, 3, S2J3O, S2J3R)
+    S2J.lvl_calculator(SavingMrLombardi2, 3, S2J2O, S2J2R)
 
     # Fiction
     Fiction1O = [Free_Palestine, ChuDat, Westballz, Leffen, Captain_Faceroll, n0ne, Hungrybox]
     Fiction1R = ["w", "w", "w", "l", "w", "w", "l"]
-    Fiction2O = [Westballz, Kurv, Ginger]
-    Fiction2R = ["l", "w", "l"]
-    Fiction3O = [Spark, Lucky, Bimbo, ARMY, Ginger, iBDW, iBDW]
-    Fiction3R = ["w", "l", "w", "w", "w", "w", "w"]
-    Fiction4O = [Pricent, Mango, Hax, Hungrybox, aMSa, Magi, Zain, Wizzrobe, Axe]
-    Fiction4R = ["w", "l", "w", "l", "w", "w", "l", "w", "l"]
+    Fiction2O = [Spark, Lucky, Bimbo, ARMY, Ginger, iBDW, iBDW]
+    Fiction2R = ["w", "l", "w", "w", "w", "w", "w"]
+    Fiction3O = [Pricent, Mango, Hax, Hungrybox, aMSa, Magi, Zain, Wizzrobe, Axe]
+    Fiction3R = ["w", "l", "w", "l", "w", "w", "l", "w", "l"]
     Fiction.lvl_calculator(Genesis7, 5, Fiction1O, Fiction1R)
-    Fiction.lvl_calculator(VerdugoWest95, 4, Fiction2O, Fiction2R)
-    Fiction.lvl_calculator(SavingMrLombardi2, 1, Fiction3O, Fiction3R)
-    Fiction.lvl_calculator(SmashSummit9, 7, Fiction4O, Fiction4R)
+    Fiction.lvl_calculator(SavingMrLombardi2, 1, Fiction2O, Fiction2R)
+    Fiction.lvl_calculator(SmashSummit9, 7, Fiction3O, Fiction3R)
 
     # SFAT
     SFAT1O = [Tai, Ginger, billybopeep, Panda, Hax]
     SFAT1R = ["w", "l", "w", "w", "l"]
-    SFAT2O = [Professor_Pro, Captain_Faceroll, Ginger, Trif]
-    SFAT2R = ["w", "l", "w", "l"]
-    SFAT3O = [Captain_Faceroll, MikeHaze, Professor_Pro, Kodorin, Nut, Ginger, Trif]
-    SFAT3R = ["w", "l", "w", "w", "w", "l", "l"]
+    SFAT2O = [Captain_Faceroll, MikeHaze, Professor_Pro, Kodorin, Nut, Ginger, Trif]
+    SFAT2R = ["w", "l", "w", "w", "w", "l", "l"]
     SFAT.lvl_calculator(Genesis7, 17, SFAT1O, SFAT1R)
-    SFAT.lvl_calculator(Nimbus70, 4, SFAT2O, SFAT2R)
-    SFAT.lvl_calculator(SavingMrLombardi2, 9, SFAT3O, SFAT3R)
+    SFAT.lvl_calculator(SavingMrLombardi2, 9, SFAT2O, SFAT2R)
 
     # moky
     Moky1O = [Forrest, Nut, Kevin_Maples, Ryobeat]
@@ -398,6 +387,35 @@ def main():
     Trif.lvl_calculator(Valhalla3, 4, Trif1O, Trif1R)
     Trif.lvl_calculator(Genesis7, 17, Trif2O, Trif2R)
     Trif.lvl_calculator(SavingMrLombardi2, 7, Trif3O, Trif3R)
+
+    # Captain Faceroll
+    CF1O = [Bladewise, Swedish_Delight, Hungrybox, Wizzrobe, iBDW, Fiction]
+    CF1R = ["w", "w", "l", "w", "w", "l"]
+    CF2O = [SFAT, MikeHaze, Professor_Pro, Kodorin, Nut, Prince_Abu, ARMY]
+    CF2R = ["l", "l", "l", "w", "w", "w", "l"]
+    Captain_Faceroll.lvl_calculator(Genesis7, 9, CF1O, CF1R)
+    Captain_Faceroll.lvl_calculator(SavingMrLombardi2, 9, CF2O, CF2R)
+
+    # Swedish Delight
+    SD1O = [Kevin_Maples, Captain_Faceroll, La_Luna, Trif, Mew2King, Shroomed]
+    SD1R = ["w", "l", "w", "w", "w", "l"]
+    Swedish_Delight.lvl_calculator(Genesis7, 9, SD1O, SD1R)
+
+    # Hax$
+    Hax1O = [Aura, n0ne, Leffen, SFAT, Westballz, PewPewU, Shroomed, Leffen, Hungrybox]
+    Hax1R = ["w", "w", "l", "w", "w", "w", "w", "w", "l"]
+    Hax2O = [Hungrybox, Plup, Fiction, Mango, Pricent, Spark, n0ne, iBDW]
+    Hax2R = ["l", "w", "l", "l", "w", "w", "w", "l"]
+    Hax.lvl_calculator(Genesis7, 4, Hax1O, Hax1R)
+    Hax.lvl_calculator(SmashSummit9, 7, Hax2O, Hax2R)
+
+    # Lucky
+    Lucky1O = [Ice, Plus100]
+    Lucky1R = ["l", "l"]
+    Lucky2O = [Fiction, Spark, Bimbo, Plus100, iBDW, MikeHaze, S2J]
+    Lucky2R = ["w", "w", "w", "l", "l", "w", "l"]
+    Lucky.lvl_calculator(Genesis7, 65, Lucky1O, Lucky1R)
+    Lucky.lvl_calculator(SavingMrLombardi2, 7, Lucky2O, Lucky2R)
 
     # Main part
     # printPlayers(player_list)
