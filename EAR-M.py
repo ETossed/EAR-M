@@ -9,12 +9,23 @@ import math
 
 class Tournament(object):
     def __init__(self, name, size, winner):
-        self.name = name;
-        self.size = size;
-        self.winner = winner;
+        self.name = name
+        self.size = size
+        self.winner = winner
 
     def __repr__(self):
-        return "Tournament: " + self.name + " | Winner: " + self.winner
+        temp = None
+        if self.size == 1:
+            temp = "Superlocal (Non-Cali)"
+        if self.size == 2:
+            temp = "Regional"
+        elif self.size == 3:
+            temp = "Super Regional"
+        elif self.size == 4:
+            temp = "Major"
+        elif self.size == 5:
+            temp = "Super Major"
+        return "Tournament: " + self.name + "| Size: " + temp + " | Winner: " + self.winner.tag
 
 class Player(object):
     def __init__(self, tag, rank):
@@ -32,6 +43,14 @@ class Player(object):
     def __repr__(self):
         return self.tag + " EAR-M: " + str(self.melee_lvl)
 
+    def printTournaments(self):
+        tournamentString = self.tag + "'s Tournaments Attended: "
+        for i in range(len(self.tournaments)):
+            tournamentString += ("\n" + self.tournaments[i].name)
+        print(tournamentString)
+
+    # ACTUAL CALCULATION DONE BELOW
+    # STATIC ALGORITHM
     def lvl_calculator(self, tournament, placement, opponents, history):
         # Tournament is the tournament that was attended
         # Placement is the player's placement at that tournament
@@ -79,7 +98,7 @@ class Player(object):
         elif placement == 5:
             placement = 4
         elif placement == 7:
-            placemeent = 3
+            placement = 3
         elif placement == 9:
             placement = 2
         elif placement == 13:
@@ -112,23 +131,10 @@ class Player(object):
 
         self.melee_lvl += p_s
 
-def sortAndPrintPlayers(players):
+def printSortedPlayers(players):
     players.sort(reverse=True)
     for i in range(len(players)):
-        if players[i].sets_played != 0:
-            print(players[i].tag + " - EAR-M: " + (str("{:.2f}".format(players[i].melee_lvl))))
-
-def printPlayers(players):
-    for i in range(len(players)):
-        if players[i].sets_played != 0:
-            print(players[i].tag + " | 2019 Rank: " + (str(players[i].rank)) + " | EAR-M: " + (str("{:.2f}".format(players[i].melee_lvl))))
-
-def printTournaments(player):
-    tournamentString = player.tag + ": "
-    for i in range(len(player.tournaments)):
-        tournamentString += (player.tournaments[i].name + ", ")
-    print(tournamentString)
-
+        print(str(i+1) + ". " + players[i].tag + " | 2019 Rank: " + (str(players[i].rank)) + " | EAR-M: " + (str("{:.2f}".format(players[i].melee_lvl))) + "\n")
 # GIANT LIST OF PLAYERS BELOW
 
 Hungrybox = Player("Hungrybox", 1)
@@ -176,7 +182,7 @@ Setchi = Player("Setchi", 42)
 Magi = Player("Magi", 43)
 Morsecode = Player("Morecode762", 44)
 JakenShaken = Player("JakenShaken", 45)
-HugS = Player("HugS86", 46)
+HugS = Player("HugS", 46)
 Stango = Player("Stango", 47)
 Zamu = Player("Zamu", 48)
 Drephen = Player("Drephen", 49)
@@ -200,7 +206,7 @@ Tai = Player("Tai", 66)
 Squid = Player("Squid", 67)
 Forrest = Player("Forrest", 68)
 Joyboy = Player("Joyboy", 69)
-Kodorin = Player("KoDoRiN", 70)
+Kodorin = Player("Kodorin", 70)
 Ryan_Ford = Player("Ryan Ford", 71)
 Free_Palestine = Player("Free Palestine", 72)
 Ryobeat = Player("Ryobeat", 73)
@@ -237,17 +243,12 @@ player_list = [Hungrybox, Leffen, Mango, Axe, Wizzrobe, Zain, aMSa, Plup, iBDW, 
 
 # GIANT LIST OF PLAYERS DONE
 
-# SIZE TO NUMBERS
-# 5 = Super Major
-# 4 = Major
-# 3 = Super regional
-# 2 = Regional
-# 1 = Super Local
-
-Valhalla3 = Tournament("Valhalla III", 3, "Leffen")
-Genesis7 = Tournament("Genesis 7", 5, "Zain")
-SavingMrLombardi2 = Tournament("Saving Mr. Lombardi 2", 3, "Fiction")
-SmashSummit9 = Tournament("Smash Summit 9", 4, "Hungrybox")
+Valhalla3 = Tournament("Valhalla III", 3, Leffen)
+Genesis7 = Tournament("Genesis 7", 5, Zain)
+SavingMrLombardi2 = Tournament("Saving Mr. Lombardi 2", 3, Fiction)
+SmashSummit9 = Tournament("Smash Summit 9", 4, Hungrybox)
+HTL5 = Tournament("Hold That L 5", 1, Ginger)
+DreamhackAnaheim = Tournament("Dreamhack Anaheim 2020", 2, Fiction)
 
 
 def main():
@@ -340,8 +341,11 @@ def main():
     S2J1R = ["w", "l", "w", "l"]
     S2J2O = [Ginger, Westballz, Ice, Prince_Abu, Franz, Kalamazhu, Professor_Pro, Lucky, Ginger, Professor_Pro, iBDW]
     S2J2R = ["w", "w", "w", "w", "w", "l", "w", "w", "w", "w", "l"]
+    S2J3O = [Tai, ARMY, Fiction, Westballz, Fiction, Fiction]
+    S2J3R = ["w", "w", "l", "w", "w", "l"]
     S2J.lvl_calculator(Genesis7, 13, S2J1O, S2J1R)
     S2J.lvl_calculator(SavingMrLombardi2, 3, S2J2O, S2J2R)
+    S2J.lvl_calculator(DreamhackAnaheim, 2, S2J3O, S2J3R)
 
     # Fiction
     Fiction1O = [Free_Palestine, ChuDat, Westballz, Leffen, Captain_Faceroll, n0ne, Hungrybox]
@@ -350,9 +354,12 @@ def main():
     Fiction2R = ["w", "l", "w", "w", "w", "w", "w"]
     Fiction3O = [Pricent, Mango, Hax, Hungrybox, aMSa, Magi, Zain, Wizzrobe, Axe]
     Fiction3R = ["w", "l", "w", "l", "w", "w", "l", "w", "l"]
+    Fiction4O = [Westballz, S2J, S2J, S2J]
+    Fiction4R = ["w", "w", "l", "w"]
     Fiction.lvl_calculator(Genesis7, 5, Fiction1O, Fiction1R)
     Fiction.lvl_calculator(SavingMrLombardi2, 1, Fiction2O, Fiction2R)
     Fiction.lvl_calculator(SmashSummit9, 7, Fiction3O, Fiction3R)
+    Fiction.lvl_calculator(DreamhackAnaheim, 1, Fiction4O, Fiction4R)
 
     # SFAT
     SFAT1O = [Tai, Ginger, billybopeep, Panda, Hax]
@@ -414,12 +421,464 @@ def main():
     Lucky1R = ["l", "l"]
     Lucky2O = [Fiction, Spark, Bimbo, Plus100, iBDW, MikeHaze, S2J]
     Lucky2R = ["w", "w", "w", "l", "l", "w", "l"]
+    Lucky3O = [Squid, Westballz, Plus100]
+    Lucky3R = ["w", "l", "l"]
     Lucky.lvl_calculator(Genesis7, 65, Lucky1O, Lucky1R)
     Lucky.lvl_calculator(SavingMrLombardi2, 7, Lucky2O, Lucky2R)
+    Lucky.lvl_calculator(DreamhackAnaheim, 9, Lucky3O, Lucky3R)
+
+    # Ginger
+    Ginger1O = [Kalvar, SFAT, Shroomed, n0ne]
+    Ginger1R = ["w", "w", "l", "l"]
+    Ginger2O = [S2J, Westballz, Ice, Prince_Abu, Franz, SFAT, Fiction, S2J]
+    Ginger2R = ["l", "l", "w", "w", "w", "w", "l", "l"]
+    Ginger3O = [Prince_Abu, Magi, Magi]
+    Ginger3R = ["w", "w", "w"]
+    Ginger.lvl_calculator(Genesis7, 17, Ginger1O, Ginger1R)
+    Ginger.lvl_calculator(SavingMrLombardi2, 5, Ginger2O, Ginger2R)
+    Ginger.lvl_calculator(HTL5, 1, Ginger3O, Ginger3R)
+
+    # Spark
+    Spark1O = [Plus100, Free_Palestine, Wizzrobe]
+    Spark1R = ["l", "w", "l"]
+    Spark2O = [Fiction, Lucky, Bimbo, Plus100]
+    Spark2R = ["l", "l", "w", "l"]
+    Spark3O = [Leffen, Ryobeat, Axe, n0ne, iBDW, Hax]
+    Spark3R = ["l", "w", "l", "l", "l", "l"]
+    Spark.lvl_calculator(Genesis7, 25, Spark1O, Spark1R)
+    Spark.lvl_calculator(SavingMrLombardi2, 17, Spark2O, Spark2R)
+    Spark.lvl_calculator(SmashSummit9, 13, Spark3O, Spark3R)
+
+    # ChuDat
+    ChuDat1O = [Fiction, TheSWOOPER]
+    ChuDat1R = ["l", "l"]
+    ChuDat.lvl_calculator(Genesis7, 33, ChuDat1O, ChuDat1R)
+
+    # PewPewU
+    PPU1O = [HugS, Plup, iBDW, Hungrybox, Hax]
+    PPU1R = ["w", "w", "w", "l", "l"]
+    Spark.lvl_calculator(Genesis7, 9, PPU1O, PPU1R)
+
+    # lloD
+    # NOTHING
+
+    # ARMY
+    ARMY1O = [Drephen, iBDW, Aura, Plup, Mew2King]
+    ARMY1R = ["w", "l", "w", "w", "l"]
+    ARMY2O = [iBDW, Trif, Albert, Kalamazhu, Squid, Fiction, Captain_Faceroll, Trif, Professor_Pro]
+    ARMY2R = ["w", "w", "w", "l", "w", "l", "w", "w", "l"]
+    ARMY3O = [Nut, S2J, Westballz]
+    ARMY3R = ["w", "l", "l"]
+    ARMY.lvl_calculator(Genesis7, 17, ARMY1O, ARMY1R)
+    ARMY.lvl_calculator(SavingMrLombardi2, 5, ARMY2O, ARMY2R)
+    ARMY.lvl_calculator(DreamhackAnaheim, 4, ARMY3O, ARMY3R)
+
+    # AbsentPage
+    # NOTHING
+
+    # Bananas
+    # NOTHING
+
+    # KJH
+    # NOTHING
+
+    # Shroomed
+    Shroomed1O = [Rishi, Panda, Ginger, Zain, Swedish_Delight, Hax]
+    Shroomed1R = ["w", "w", "w", "l", "w", "l"]
+    Shroomed2O = [Mango, Magi, Plup, Pricent, aMSa]
+    Shroomed2R = ["l", "w", "l", "l", "l"]
+    Shroomed.lvl_calculator(Genesis7, 7, Shroomed1O, Shroomed1R)
+    Shroomed.lvl_calculator(SmashSummit9, 17, Shroomed2O, Shroomed2R)
+
+    # Westballz
+    Westballz1O = [Ryobeat, Fiction, Hax]
+    Westballz1R = ["w", "l", "l"]
+    Westballz2O = [S2J, Ginger, Ice, Prince_Abu, Franz, MikeHaze]
+    Westballz2R = ["l", "w", "l", "l", "w", "l"]
+    Westballz3O = [Schythed, Lucky, Fiction, Tai, ARMY, S2J]
+    Westballz3R = ["w", "w", "l", "w", "w", "l"]
+    Westballz.lvl_calculator(Genesis7, 13, Westballz1O, Westballz1R)
+    Westballz.lvl_calculator(SavingMrLombardi2, 13, Westballz1O, Westballz1R)
+    Westballz.lvl_calculator(DreamhackAnaheim, 3, Westballz3O, Westballz3R)
+
+    # Medz
+    Medz1O = [JakenShaken, Wizzrobe]
+    Medz1R = ["l", "l"]
+    Medz.lvl_calculator(Genesis7, 49, Medz1O, Medz1R)
+
+    # Professor_Pro
+    Prof1O = [Leffen, Leffen]
+    Prof1R = ["l", "l"]
+    Prof2O = [billybopeep, Mew2King, Kodorin, Ice]
+    Prof2R = ["w", "l", "w", "l"]
+    Prof3O = [SFAT, Captain_Faceroll, MikeHaze, Kodorin, Nut, S2J, iBDW, ARMY, S2J]
+    Prof3R = ["l", "w", "w", "w", "w", "w", "l", "w", "l"]
+    Professor_Pro.lvl_calculator(Valhalla3, 2, Prof1O, Prof1R)
+    Professor_Pro.lvl_calculator(Genesis7, 25, Prof2O, Prof2R)
+    Professor_Pro.lvl_calculator(SavingMrLombardi2, 4, Prof3O, Prof3R)
+
+    # 2Saint
+    # None
+
+    # Gahtzu
+    Gahtzu1O = [Plus100, Plus100]
+    Gahtzu1R = ["l", "l"]
+
+    # Albert
+    Albert1O = [iBDW, Trif, ARMY, Kalamazhu, Squid]
+    Albert1R = ["l", "l", "l", "l", "w"]
+    Albert2O = [Plus100, Tai]
+    Albert2R = ["l", "l"]
+    Albert.lvl_calculator(SavingMrLombardi2, 17, Albert1O, Albert1R)
+    Albert.lvl_calculator(DreamhackAnaheim, 9, Albert2O, Albert2R)
+
+    # Spud
+    Spud1O = [FatGoku, Hungrybox, La_Luna]
+    Spud1R = ["w", "l", "l"]
+    Spud.lvl_calculator(Genesis7, 33, Spud1O, Spud1R)
+
+    # FatGoku
+    FatGoku1O = [Spud, Plus100]
+    FatGoku1R = ["l", "l"]
+    FatGoku2O = [TheSWOOPER, Magi, Drephen, Prince_Abu]
+    FatGoku2R = ["w", "l", "w", "l"]
+    FatGoku.lvl_calculator(Genesis7, 65, FatGoku1O, FatGoku1R)
+    FatGoku.lvl_calculator(HTL5, 4, FatGoku1O, FatGoku1R)
+
+    # Rishi
+    Rishi1O = [Slox, Plus100, Plus100]
+    Rishi1R = ["w", "l", "l"]
+    Rishi.lvl_calculator(Genesis7, 65, Rishi1O, Rishi1R)
+
+    # Bimbo
+    Bimbo1O = [Plus100, TheSWOOPER]
+    Bimbo1R = ["l", "l"]
+    Bimbo2O = [Fiction, Spark, Lucky, Plus100, Plus100]
+    Bimbo2R = ["l", "l", "l", "l", "l"]
+    Bimbo.lvl_calculator(Genesis7, 97, Bimbo1O, Bimbo1R)
+    Bimbo.lvl_calculator(SavingMrLombardi2, 25, Bimbo2O, Bimbo2R)
+
+    # Setchi
+    # NONE
+
+    # Magi
+    Magi1O = [Plus100, Plus100]
+    Magi1R = ["l", "l"]
+    Magi2O = [aMSa, Shroomed, Plup, Pricent, Fiction, Wizzrobe]
+    Magi2R = ["l", "l", "l", "w", "l", "l"]
+    Magi3O = [TheRealThing, FatGoku, Ginger, Prince_Abu, Ginger]
+    Magi3R = ["w", "w", "l", "w", "l"]
+    Magi.lvl_calculator(Genesis7, 129, Magi1O, Magi1R)
+    Magi.lvl_calculator(SmashSummit9, 13, Magi2O, Magi2R)
+    Magi.lvl_calculator(HTL5, 2, Magi3O, Magi3R)
+
+    # Morsecode762
+    # NONE
+
+    # JakenShaken
+    JS1O = [Medz, Zain, Plus100]
+    JS1R = ["w", "l", "l"]
+    JakenShaken.lvl_calculator(Genesis7, 33, JS1O, JS1R)
+
+    # HugS
+    Hugs1O = [PewPewU, Prince_Abu]
+    Hugs1R = ["l", "l"]
+    Hugs2O = [Plus100, Squid]
+    Hugs2R = ["l", "l"]
+    HugS.lvl_calculator(Genesis7, 65, Hugs1O, Hugs1R)
+    HugS.lvl_calculator(SavingMrLombardi2, 33, Hugs2O, Hugs2R)
+
+    # Stango
+    # NONE
+
+    # Zamu
+    Zamu1O = [Plus100, Wizzrobe]
+    Zamu1R = ["l", "l"]
+    Zamu.lvl_calculator(Genesis7, 65, Zamu1O, Zamu1R)
+
+    # Drephen
+    Drephen1O = [ARMY, Plus100]
+    Drephen1R = ["l", "l"]
+    Drephen2O = [Prince_Abu, FatGoku]
+    Drephen2R = ["l", "l"]
+    Drephen.lvl_calculator(Genesis7, 65, Drephen1O, Drephen1R)
+    Drephen.lvl_calculator(HTL5, 5, Drephen2O, Drephen2R)
+
+    # Michael
+    # NONE
+
+    # Ice
+    Ice1O = [Lucky, aMSa, Rishi, Professor_Pro, iBDW]
+    Ice1R = ["w", "l", "w", "w", "l"]
+    Ice2O = [Westballz, Franz, S2J, Ginger, Prince_Abu]
+    Ice2R = ["w", "w", "l", "l", "l"]
+    Ice.lvl_calculator(Genesis7, 17, Ice1O, Ice1R)
+    Ice.lvl_calculator(SavingMrLombardi2, 17, Ice2O, Ice2R)
+
+    # billybopeep
+    BBP1O = [Professor_Pro, BBB, SFAT]
+    BBP1R = ["l", "w", "l"]
+    billybopeep.lvl_calculator(Genesis7, 33, BBP1O, BBP1R)
+
+    # La Luna
+    LaLuna1O = [Plus100, Joyboy, Spud, Swedish_Delight]
+    LaLuna1R = ["l", "w", "w", "l"]
+    La_Luna.lvl_calculator(Genesis7, 25, LaLuna1O, LaLuna1R)
+
+    # Colbol
+    # NONE
+
+    # OverTriforce
+    Over1O = [Frenzy, Plus100]
+    Over1R = ["l", "l"]
+    OverTriforce.lvl_calculator(Valhalla3, 5, Over1O, Over1R)
+
+    # Slox
+    # NONE
+
+    # Kalamazhu
+    Kzhu1O = [Plus100, Plus100]
+    Kzhu1R = ["l", "l"]
+    Kzhu2O = [iBDW, Trif, ARMY, Albert, Squid, S2J]
+    Kzhu2R = ["l", "w", "w", "w", "w", "l"]
+    Kalamazhu.lvl_calculator(Genesis7, 97, Kzhu1O, Kzhu1R)
+    Kalamazhu.lvl_calculator(SavingMrLombardi2, 9, Kzhu2O, Kzhu2R)
+
+    # Nickemwit
+    # NONE
+
+    # Jerry
+    # NONE
+
+    # Aura
+    Aura1O = [Hax, Tai, ARMY]
+    Aura1R = ["l", "w", "l"]
+    Aura.lvl_calculator(Genesis7, 33, Aura1O, Aura1R)
+
+    # Nut
+    Nut1O = [Plus100, Moky]
+    Nut1R = ["l", "l"]
+    Nut2O = [Prince_Abu, SFAT, Captain_Faceroll, MikeHaze, Professor_Pro, Kodorin]
+    Nut2R = ["l", "l", "l", "l", "l", "l"]
+    Nut3O = [Kurv, ARMY, Plus100]
+    Nut3R = ["w", "l", "l"]
+    Nut.lvl_calculator(Genesis7, 65, Nut1O, Nut1R)
+    Nut.lvl_calculator(SavingMrLombardi2, 25, Nut2O, Nut2R)
+    Nut.lvl_calculator(DreamhackAnaheim, 17, Nut3O, Nut3R)
+
+    # Kalvar
+    Kalvar1O = [Ginger, Plus100]
+    Kalvar1R = ["l", "l"]
+    Kalvar.lvl_calculator(Genesis7, 65, Kalvar1O, Kalvar1R)
+
+    # Polish
+    # NONE
+
+    # Kevin Maples
+    KevinMaples1O = [Swedish_Delight, Moky]
+    KevinMaples1R = ["l", "l"]
+    Kevin_Maples.lvl_calculator(Genesis7, 49, KevinMaples1O, KevinMaples1R)
+
+    # Bladewise
+    Bladewise1O = [Captain_Faceroll, Plus100]
+    Bladewise1R = ["l", "l"]
+    Kevin_Maples.lvl_calculator(Genesis7, 65, Bladewise1O, Bladewise1R)
+
+    # Tai
+    Tai1O = [SFAT, Aura]
+    Tai1R = ["l", "l"]
+    Tai2O = [MikeHaze, S2J, Albert, Schythed, Westballz]
+    Tai2R = ["w", "l", "w", "w", "l"]
+    Tai.lvl_calculator(Genesis7, 49, Tai1O, Tai1R)
+    Tai.lvl_calculator(DreamhackAnaheim, 5, Tai2O, Tai2R)
+
+    # Squid
+    Squid1O = [Franz, HugS, iBDW, Trif, ARMY, Albert, Kalamazhu]
+    Squid1R = ["l", "w", "l", "l", "l", "l", "l"]
+    Squid2O = [Lucky, Schythed]
+    Squid2R = ["l", "l"]
+    Squid.lvl_calculator(SavingMrLombardi2, 25, Squid1O, Squid1R)
+    Squid.lvl_calculator(DreamhackAnaheim, 13, Squid2O, Squid2R)
+
+    # Forrest
+    Forrest1O = [HTwa, Moky, Trif, Wizzrobe]
+    Forrest1R = ["w", "w", "l", "l"]
+    Forrest.lvl_calculator(Genesis7, 33, Forrest1O, Forrest1R)
+
+    # Joyboy
+    Joyboy1O = [S2J, La_Luna]
+    Joyboy1R = ["l", "l"]
+    Joyboy.lvl_calculator(Genesis7, 65, Joyboy1O, Joyboy1R)
+
+    # Kodorin
+    Kodorin1O = [n0ne, Professor_Pro]
+    Kodorin1R = ["l", "l"]
+    Kodorin2O = [Franz, SFAT, Captain_Faceroll, MikeHaze, Professor_Pro, Nut]
+    Kodorin2R = ["w", "l", "l", "w", "l", "w"]
+    Kodorin.lvl_calculator(Genesis7, 33, Kodorin1O, Kodorin1R)
+    Kodorin.lvl_calculator(SavingMrLombardi2, 17, Kodorin2O, Kodorin2R)
+
+    # Ryan Ford
+    # NONE
+
+    # Free Palestine
+    FP1O = [Fiction, Spark]
+    FP1R = ["l", "l"]
+    Free_Palestine.lvl_calculator(Genesis7, 49, FP1O, FP1R)
+
+    # Ryobeat
+    Ryobeat1O = [Umarth, Wizzrobe, Westballz, Moky, TheSWOOPER, S2J]
+    Ryobeat1R = ["w", "w", "l", "w", "w", "l"]
+    Ryobeat2O = [Axe, Spark, BBB, Wizzrobe, n0ne]
+    Ryobeat2R = ["l", "l", "l", "l", "l"]
+    Ryobeat.lvl_calculator(Genesis7, 17, Ryobeat1O, Ryobeat1R)
+    Ryobeat.lvl_calculator(SmashSummit9, 17, Ryobeat2O, Ryobeat2R)
+
+    # Ka-Master
+    # NONE
+
+    # Kurv
+    Kurv1O = [Plus100, Plus100]
+    Kurv1R = ["l", "l"]
+    Kurv2O = [Plus100, Plus100]
+    Kurv2R = ["l", "l"]
+    Kurv3O = [Plus100, Nut]
+    Kurv3R = ["l", "l"]
+    Kurv.lvl_calculator(Genesis7, 97, Kurv1O, Kurv1R)
+    Kurv.lvl_calculator(SavingMrLombardi2, 33, Kurv2O, Kurv2R)
+    Kurv.lvl_calculator(DreamhackAnaheim, 33, Kurv3O, Kurv3R)
+
+    # Frenzy
+    Frenzy1O = [OverTriforce, Leffen, Trif]
+    Frenzy1R = ["w", "l", "l"]
+    Frenzy.lvl_calculator(Valhalla3, 5, Frenzy1O, Frenzy1R)
+
+    # MoG
+    # NONE
+
+    # Boyd
+    Boyd1O = [Zain, Plus100]
+    Boyd1R = ["l", "l"]
+    Boyd.lvl_calculator(Genesis7, 65, Boyd1O, Boyd1R)
+
+    # Cool Lime
+    # NONE
+
+    # Bobby Big Ballz
+    BBB1O = [iBDW, billybopeep]
+    BBB1R = ["l", "l"]
+    BBB2O = [Wizzrobe, iBDW, Ryobeat, Axe, Leffen, aMSa]
+    BBB2R = ["l", "l", "w", "l", "l", "l"]
+    BBB.lvl_calculator(Genesis7, 49, BBB1O, BBB1R)
+    BBB.lvl_calculator(SmashSummit9, 13, BBB2O, BBB2R)
+
+    # Nintendude
+    Nintendude1O = [Panda, Plus100]
+    Nintendude1R = ["l", "l"]
+    Nintendude.lvl_calculator(Genesis7, 97, Nintendude1O, Nintendude1R)
+
+    # Franz
+    Franz1O = [Plus100, Plus100]
+    Franz1R = ["l", "l"]
+    Franz2O = [Squid, Kodorin, S2J, Ginger, Westballz, Ice, Prince_Abu]
+    Franz2R = ["w", "l", "l", "l", "l", "l", "l"]
+    Franz.lvl_calculator(Genesis7, 129, Franz1O, Franz1R)
+    Franz.lvl_calculator(Genesis7, 25, Franz1O, Franz1R)
+
+    # Nicki
+    Nicki1O = [Mango, TheSWOOPER]
+    Nicki1R = ["l", "l"]
+    Nicki.lvl_calculator(Genesis7, 65, Nicki1O, Nicki1R)
+
+    # Lint
+    # NONE
+
+    # King Momo
+    # NONE
+
+    # TheRealThing
+    TRT1O = [Schythed, Plus100]
+    TRT1R = ["l", "l"]
+    TRT2O = [Magi, Prince_Abu]
+    TRT2R = ["l", "l"]
+    TheRealThing.lvl_calculator(Genesis7, 65, TRT1O, TRT1R)
+    TheRealThing.lvl_calculator(HTL5, 5, TRT2O, TRT2R)
+
+    # Umarth
+    Umarth1O = [Ryobeat, Plus100]
+    Umarth1R = ["l", "l"]
+    Umarth.lvl_calculator(Genesis7, 65, Umarth1O, Umarth1R)
+
+    # Zeo
+    Zeo1O = [Plus100, Plus100]
+    Zeo1R = ["l", "l"]
+    Zeo.lvl_calculator(SavingMrLombardi2, 25, Zeo1O, Zeo1R)
+
+    # Pricent
+    Pricent1O = [Fiction, aMSa, Shroomed, Magi, Hax, iBDW]
+    Pricent1R = ["l", "l", "w", "l", "l", "l"]
+    Pricent.lvl_calculator(SmashSummit9, 13, Pricent1O, Pricent1R)
+
+    # Prince Abu
+    PA1O = [Rocky, HugS, MikeHaze]
+    PA1R = ["l", "w", "l"]
+    PA2O = [Nut, S2J, Ginger, Westballz, Ice, Franz, Captain_Faceroll]
+    PA2R = ["w", "l", "l", "w", "w", "w", "l"]
+    PA3O = [Drephen, Ginger, TheRealThing, FatGoku, Magi]
+    PA3R = ["w", "l", "w", "w", "l"]
+    Prince_Abu.lvl_calculator(Genesis7, 33, PA1O, PA1R)
+    Prince_Abu.lvl_calculator(SavingMrLombardi2, 13, PA2O, PA2R)
+    Prince_Abu.lvl_calculator(HTL5, 3, PA3O, PA3R)
+
+    # Amsah
+    # NONE
+
+    # Rocky
+    Rocky1O = [Prince_Abu, Plup, Plus100]
+    Rocky1R = ["w", "l", "l"]
+    Rocky.lvl_calculator(Genesis7, 49, Rocky1O, Rocky1R)
+
+    # Sharkz
+    # None
+
+    # HTwa
+    HTwa1O = [Forrest, Plus100]
+    HTwa1R = ["l", "l"]
+    HTwa.lvl_calculator(Genesis7, 129, HTwa1O, HTwa1R)
+
+    # Kage
+    # None
+
+    # Schythed
+    Schythed1O = [TheRealThing, Leffen, Plus100]
+    Schythed1R = ["w", "l", "l"]
+    Schythed.lvl_calculator(Genesis7, 65, Schythed1O, Schythed1R)
+
+    # Panda
+    Panda1O = [Nintendude, Axe, Shroomed, SFAT]
+    Panda1R = ["w", "w", "l", "l"]
+    Panda.lvl_calculator(Genesis7, 25, Panda1O, Panda1R)
+
+    # Soonsay
+    Soonsay1O = [Mew2King, Plus100]
+    Soonsay1R = ["l", "l"]
+    Soonsay.lvl_calculator(Genesis7, 65, Soonsay1O, Soonsay1R)
+
+    # TheSWOOPER
+    TS1O = [Plus100, Bimbo, Nicki, ChuDat, Ryobeat]
+    TS1R = ["l", "w", "w", "w", "l"]
+    TS2O = [FatGoku, Plus100]
+    TS2R = ["l", "l"]
+    TheSWOOPER.lvl_calculator(Genesis7, 25, TS1O, TS1R)
+    TheSWOOPER.lvl_calculator(HTL5, 9, TS2O, TS2R)
+
+    # Snowy
+    # None
+
+    # TOP 100 MPGR PLAYERS DONE
 
     # Main part
-    # printPlayers(player_list)
-    sortAndPrintPlayers(player_list)
+    printSortedPlayers(player_list)
 
 if __name__ == "__main__":
     main()
