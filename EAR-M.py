@@ -35,7 +35,7 @@ class Player(object):
         self.tournaments = []
         self.wins = []
         self.losses = []
-        self.melee_lvl = 0
+        self.melee_lvl = 1000
 
     def __lt__(self, other):
         return self.melee_lvl < other.melee_lvl
@@ -243,6 +243,8 @@ player_list = [Hungrybox, Leffen, Mango, Axe, Wizzrobe, Zain, aMSa, Plup, iBDW, 
 
 # GIANT LIST OF PLAYERS DONE
 
+# Tournaments considered
+
 Valhalla3 = Tournament("Valhalla III", 3, Leffen)
 Genesis7 = Tournament("Genesis 7", 5, Zain)
 SavingMrLombardi2 = Tournament("Saving Mr. Lombardi 2", 3, Fiction)
@@ -252,6 +254,8 @@ DreamhackAnaheim = Tournament("Dreamhack Anaheim 2020", 2, Fiction)
 
 
 def main():
+    # If a player's comment says "NONE" it means they have not attended any tournaments on the list above
+
     # Hungrybox
     Hungrybox1O = [Spud, Captain_Faceroll, PewPewU, Zain, Fiction, Hax, Mango, Zain]
     Hungrybox1R = ["w", "w", "w", "l", "w", "w", "w", "l"]
@@ -457,7 +461,7 @@ def main():
     # PewPewU
     PPU1O = [HugS, Plup, iBDW, Hungrybox, Hax]
     PPU1R = ["w", "w", "w", "l", "l"]
-    Spark.lvl_calculator(Genesis7, 9, PPU1O, PPU1R)
+    PewPewU.lvl_calculator(Genesis7, 9, PPU1O, PPU1R)
 
     # lloD
     # NOTHING
@@ -546,9 +550,9 @@ def main():
     FatGoku.lvl_calculator(HTL5, 4, FatGoku1O, FatGoku1R)
 
     # Rishi
-    Rishi1O = [Slox, Plus100, Plus100]
-    Rishi1R = ["w", "l", "l"]
-    Rishi.lvl_calculator(Genesis7, 65, Rishi1O, Rishi1R)
+    Rishi1O = [Shroomed, Ice]
+    Rishi1R = ["l", "l"]
+    Rishi.lvl_calculator(Genesis7, 49, Rishi1O, Rishi1R)
 
     # Bimbo
     Bimbo1O = [Plus100, TheSWOOPER]
